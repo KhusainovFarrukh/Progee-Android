@@ -1,7 +1,8 @@
-package kh.farrukh.progee
+package kh.farrukh.progee.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kh.farrukh.progee.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
