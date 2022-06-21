@@ -14,7 +14,7 @@ fun LanguageApiModel.toLanguage() = Language(
     name = name,
     description = description,
     state = state,
-    image = image.toImage(),
-    author = author.toUser(),
+//    image = image.toImage(),
+//    author = author.toUser(),
     createdAt = createdAt
 )

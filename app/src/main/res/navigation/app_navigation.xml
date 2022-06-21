@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/languagesFragment">
+
+    <fragment
+        android:id="@+id/createDataFragment"
+        android:name="kh.farrukh.progee.ui.create_data.CreateDataFragment"
+        android:label="CreateDataFragment" />
+    <fragment
+        android:id="@+id/languagesFragment"
+        android:name="kh.farrukh.progee.ui.languages.LanguagesFragment"
+        android:label="LanguagesFragment" />
+    <fragment
+        android:id="@+id/playgroundFragment"
+        android:name="kh.farrukh.progee.ui.playground.PlaygroundFragment"
+        android:label="PlaygroundFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="kh.farrukh.progee.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
+</navigation>

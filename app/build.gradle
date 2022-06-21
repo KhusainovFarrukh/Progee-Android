@@ -19,6 +19,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -96,4 +99,11 @@ dependencies {
 
     // Lottie
     implementation "com.airbnb.android:lottie:4.2.2"
+
+    //MeowBottomNavigation
+    implementation files("libs/meow-bottom-navigation-1.2.0.aar")
+
+    //ExpandableTextView
+    implementation files("libs/expandabletextview-1.0.5.aar")
+
 }
