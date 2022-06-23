@@ -8,6 +8,5 @@ import kh.farrukh.progee.data.image.models.Image
  *kh.farrukh.progee.data.image.models
  **/
 fun ImageApiModel.toImage() = Image(
-    id = id,
-    location = location
+    id = id
 )

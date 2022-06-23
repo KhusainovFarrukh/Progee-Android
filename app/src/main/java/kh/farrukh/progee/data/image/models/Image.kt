@@ -10,6 +10,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "images")
 data class Image(
     @PrimaryKey
-    val id: Long,
-    val location: String
+    val id: Long
 )

@@ -5,6 +5,5 @@ package kh.farrukh.progee.api.image.models
  *kh.farrukh.progee.api.image.models
  **/
 data class ImageApiModel(
-    val id: Long,
-    val location: String
+    val id: Long
 )

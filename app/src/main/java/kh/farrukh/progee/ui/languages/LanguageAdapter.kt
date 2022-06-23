@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kh.farrukh.progee.data.language.models.Language
 import kh.farrukh.progee.databinding.ItemLanguageBinding
 import kh.farrukh.progee.utils.SingleBlock
+import kh.farrukh.progee.utils.loadImageById
 
 /**
  *Created by farrukh_kh on 6/23/22 10:39 AM
@@ -117,8 +118,7 @@ class LanguageAdapter(
         fun onBindMovie(language: Language) = with(binding) {
 
             tvTitle.text = language.name
-            // TODO: fix image bug in api & implement er model in android
-//            imvImage.loadImageById(language.image.id)
+            imvImage.loadImageById(language.image.id)
         }
     }
 
