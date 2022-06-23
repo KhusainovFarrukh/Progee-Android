@@ -14,10 +14,10 @@ import kh.farrukh.progee.db.language.models.LanguageRemoteKey
 interface LanguageRemoteKeyDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addRemoteKey(remoteKey: LanguageRemoteKey)
+    suspend fun saveRemoteKey(remoteKey: LanguageRemoteKey)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addRemoteKeys(remoteKeys: List<LanguageRemoteKey>)
+    suspend fun saveRemoteKeys(remoteKeys: List<LanguageRemoteKey>)
 
     @Query("SELECT * FROM language_remote_keys WHERE languageId = :languageId")
     suspend fun getRemoteKeyByLanguageId(languageId: Long): LanguageRemoteKey

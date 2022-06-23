@@ -1,33 +1,33 @@
-package kh.farrukh.progee.data.language
+package kh.farrukh.progee.data.framework
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import kh.farrukh.progee.api.language.LanguageApi
-import kh.farrukh.progee.data.language.models.Language
+import kh.farrukh.progee.api.framework.FrameworkApi
+import kh.farrukh.progee.data.framework.models.Framework
 import kh.farrukh.progee.db.CacheDatabase
-import kh.farrukh.progee.db.language.models.LanguageRemoteKey
+import kh.farrukh.progee.db.framework.models.FrameworkRemoteKey
 import retrofit2.HttpException
 import java.io.IOException
 
 /**
- *Created by farrukh_kh on 6/19/22 8:00 PM
- *kh.farrukh.progee.data.language
+ *Created by farrukh_kh on 6/24/22 2:29 AM
+ *kh.farrukh.progee.data.framework
  **/
 @OptIn(ExperimentalPagingApi::class)
-class LanguageRemoteMediator(
-    private val languageApi: LanguageApi,
+class FrameworkRemoteMediator(
+    private val frameworkApi: FrameworkApi,
     private val cacheDatabase: CacheDatabase
-) : RemoteMediator<Int, Language>() {
+) : RemoteMediator<Int, Framework>() {
 
-    private val languageDao by lazy { cacheDatabase.languageDao() }
-    private val remoteKeyDao by lazy { cacheDatabase.languageRemoteKeyDao() }
+    private val frameworkDao by lazy { cacheDatabase.frameworkDao() }
+    private val remoteKeyDao by lazy { cacheDatabase.frameworkRemoteKeyDao() }
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, Language>
+        state: PagingState<Int, Framework>
     ): MediatorResult {
         try {
             val page = when (loadType) {
@@ -49,7 +49,7 @@ class LanguageRemoteMediator(
             }
 
             // TODO: handle nullability (if Response wrapper is used)
-            val response = languageApi.getLanguages(page = page)
+            val response = frameworkApi.getFrameworks(page = page)
 
             val endOfPaginationReached = response.page >= response.totalPages
 
@@ -57,22 +57,22 @@ class LanguageRemoteMediator(
                 // TODO: removed for task: Don't overwrite favState of movies on list/search queries
                 //      if uncomment this lines, movieDao.upsertMoviesWithoutFavState() won't work
                 if (loadType == LoadType.REFRESH) {
-                    languageDao.deleteAll()
+                    frameworkDao.deleteAll()
                     remoteKeyDao.deleteAll()
                 }
 
                 val prevPage = response.prevPage
                 val nextPage = response.nextPage
-                val keys = response.items.map { language ->
-                    LanguageRemoteKey(
-                        languageId = language.id,
+                val keys = response.items.map { framework ->
+                    FrameworkRemoteKey(
+                        frameworkId = framework.id,
                         prevPage = prevPage,
                         nextPage = nextPage
                     )
                 }
 
                 remoteKeyDao.saveRemoteKeys(keys)
-                languageDao.saveLanguages(response.items.map { it.toLanguage() })
+                frameworkDao.saveFrameworks(response.items.map { it.toFramework() })
             }
 
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
@@ -83,26 +83,26 @@ class LanguageRemoteMediator(
         }
     }
 
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Language>): LanguageRemoteKey? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Framework>): FrameworkRemoteKey? {
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { language ->
-                remoteKeyDao.getRemoteKeyByLanguageId(language.id)
+                remoteKeyDao.getRemoteKeyByFrameworkId(language.id)
             }
     }
 
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Language>): LanguageRemoteKey? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Framework>): FrameworkRemoteKey? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
             ?.let { language ->
-                remoteKeyDao.getRemoteKeyByLanguageId(language.id)
+                remoteKeyDao.getRemoteKeyByFrameworkId(language.id)
             }
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
-        state: PagingState<Int, Language>
-    ): LanguageRemoteKey? {
+        state: PagingState<Int, Framework>
+    ): FrameworkRemoteKey? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { languageId ->
-                remoteKeyDao.getRemoteKeyByLanguageId(languageId)
+                remoteKeyDao.getRemoteKeyByFrameworkId(languageId)
             }
         }
     }

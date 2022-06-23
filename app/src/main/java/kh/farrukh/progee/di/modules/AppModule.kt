@@ -8,6 +8,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kh.farrukh.progee.data.framework.FrameworkRepository
+import kh.farrukh.progee.data.framework.FrameworkRepositoryImpl
 import kh.farrukh.progee.data.language.LanguageRepository
 import kh.farrukh.progee.data.language.LanguageRepositoryImpl
 import kh.farrukh.progee.db.CacheDatabase
@@ -44,7 +46,11 @@ object AppModule {
 abstract class AppBindsModule {
 
     @Binds
-    abstract fun bindLanguageRepositoryImpl(languageRepositoryImpl: LanguageRepositoryImpl): LanguageRepository
+    abstract fun bindLanguageRepository(languageRepositoryImpl: LanguageRepositoryImpl): LanguageRepository
+
+    @Binds
+    abstract fun bindFrameworkRepository(frameworkRepositoryImpl: FrameworkRepositoryImpl): FrameworkRepository
+
 }
 
 @Qualifier

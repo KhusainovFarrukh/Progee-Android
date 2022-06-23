@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kh.farrukh.progee.api.framework.FrameworkApi
 import kh.farrukh.progee.api.language.LanguageApi
 import kh.farrukh.progee.utils.BASE_URL_PROGEE_API
 import okhttp3.OkHttpClient
@@ -47,5 +48,9 @@ object NetworkModule {
 object ApiModule {
 
     @Provides
-    fun provideMoviesApi(retrofit: Retrofit): LanguageApi = retrofit.create()
+    fun provideLanguageApi(retrofit: Retrofit): LanguageApi = retrofit.create()
+
+    @Provides
+    fun provideFrameworkApi(retrofit: Retrofit): FrameworkApi = retrofit.create()
+
 }
