@@ -3,10 +3,7 @@ package kh.farrukh.progee.utils
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.transition.DrawableCrossFadeFactory
 import kh.farrukh.progee.R
 
 
@@ -21,18 +18,19 @@ fun ImageView.loadImage(
     imageOptions: RequestOptions? = null
 ) {
     val glide = Glide.with(context).load(url)
-    val factory = DrawableCrossFadeFactory.Builder().setCrossFadeEnabled(true).build()
 
     if (imageOptions == null) {
         glide
             .thumbnail(Glide.with(context).load(placeholder).centerCrop())
-            .transition(withCrossFade(factory))
-            .centerCrop()
+            .dontAnimate()
+            .fitCenter()
             .error(R.drawable.placeholder_image)
             .into(this)
     } else {
-        glide.apply(imageOptions)
-            .transition(withCrossFade(factory))
+        glide
+            .apply(imageOptions)
+            .dontAnimate()
+            .fitCenter()
             .into(this)
     }
 }
