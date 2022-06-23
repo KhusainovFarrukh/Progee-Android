@@ -5,13 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
+import dagger.hilt.android.AndroidEntryPoint
 import kh.farrukh.progee.R
 import kh.farrukh.progee.databinding.ActivityMainBinding
-import kh.farrukh.progee.utils.makeStatusBarTransparent
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     private val binding by viewBinding(ActivityMainBinding::bind)
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
 
     private fun setupUi(savedInstanceState: Bundle?) {
-        makeStatusBarTransparent(binding.root)
+//        makeStatusBarTransparent(binding.root)
         window.navigationBarColor = Color.BLACK
 
         binding.bottomNav.apply {
