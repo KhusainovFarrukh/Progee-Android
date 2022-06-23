@@ -11,7 +11,11 @@
     <fragment
         android:id="@+id/languagesFragment"
         android:name="kh.farrukh.progee.ui.languages.LanguagesFragment"
-        android:label="LanguagesFragment" />
+        android:label="LanguagesFragment" >
+        <action
+            android:id="@+id/action_languagesFragment_to_languageDetailsFragment"
+            app:destination="@id/languageDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/playgroundFragment"
         android:name="kh.farrukh.progee.ui.playground.PlaygroundFragment"
@@ -20,4 +24,12 @@
         android:id="@+id/profileFragment"
         android:name="kh.farrukh.progee.ui.profile.ProfileFragment"
         android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/languageDetailsFragment"
+        android:name="kh.farrukh.progee.ui.language_details.LanguageDetailsFragment"
+        android:label="LanguageDetailsFragment" >
+        <argument
+            android:name="languageId"
+            app:argType="long" />
+    </fragment>
 </navigation>

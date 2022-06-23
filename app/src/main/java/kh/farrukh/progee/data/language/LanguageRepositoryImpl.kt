@@ -7,7 +7,11 @@ import androidx.paging.PagingData
 import kh.farrukh.progee.api.language.LanguageApi
 import kh.farrukh.progee.data.language.models.Language
 import kh.farrukh.progee.db.CacheDatabase
+import kh.farrukh.progee.di.modules.IoDispatcher
 import kh.farrukh.progee.utils.NetworkHelper
+import kh.farrukh.progee.utils.Result
+import kh.farrukh.progee.utils.requestWithLocalCache
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -21,7 +25,8 @@ class LanguageRepositoryImpl @Inject constructor(
     private val localDataSource: LanguageLocalDataSource,
     private val languageApi: LanguageApi,
     private val cacheDatabase: CacheDatabase,
-    private val networkHelper: NetworkHelper
+    private val networkHelper: NetworkHelper,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : LanguageRepository {
 
     override fun getPagedLanguages(): Flow<PagingData<Language>> = Pager(
@@ -30,4 +35,13 @@ class LanguageRepositoryImpl @Inject constructor(
     ) {
         cacheDatabase.languageDao().languagePagingSource()
     }.flow
+
+    override fun getLanguageById(languageId: Long): Flow<Result<Language>> = requestWithLocalCache(
+        remoteFetch = { remoteDataSource.getLanguageById(languageId) },
+        localQuery = { localDataSource.getLanguageById(languageId) },
+        saveFetchResult = { language -> localDataSource.saveLanguage(language) },
+        remoteResponseMapper = { apiModel -> apiModel.toLanguage() },
+        shouldFetch = { networkHelper.hasConnection },
+        coroutineContext = ioDispatcher
+    )
 }

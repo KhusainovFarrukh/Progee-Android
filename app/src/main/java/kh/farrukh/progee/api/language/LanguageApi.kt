@@ -4,6 +4,7 @@ import kh.farrukh.progee.api.global.models.PagingApiResponse
 import kh.farrukh.progee.api.global.models.PublishState
 import kh.farrukh.progee.api.language.models.LanguageApiModel
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -20,4 +21,9 @@ interface LanguageApi {
         @Query("sort_by") sortBy: String? = null,
         @Query("order_by") orderBy: String? = null
     ): PagingApiResponse<LanguageApiModel>
+
+    @GET("languages/{languageId}")
+    suspend fun getLanguageById(
+        @Path("languageId") languageId: Long
+    ): LanguageApiModel
 }

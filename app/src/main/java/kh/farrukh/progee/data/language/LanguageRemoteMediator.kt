@@ -72,7 +72,7 @@ class LanguageRemoteMediator(
                 }
 
                 remoteKeyDao.addRemoteKeys(keys)
-                languageDao.addLanguages(response.items.map { it.toLanguage() })
+                languageDao.saveLanguages(response.items.map { it.toLanguage() })
             }
 
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)

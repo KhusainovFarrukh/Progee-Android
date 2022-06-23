@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -105,7 +106,8 @@ class LanguagesFragment : Fragment(R.layout.fragment_languages) {
     }
 
     private fun onLanguageClick(languageId: Long) {
-        // TODO: handle details screen navigation
-//        findNavController().navigate(HomeFragmentDirections.toMovieDetailsFragment(movieId))
+        findNavController().navigate(
+            LanguagesFragmentDirections.actionLanguagesFragmentToLanguageDetailsFragment(languageId)
+        )
     }
 }

@@ -2,6 +2,7 @@ package kh.farrukh.progee.data.language
 
 import androidx.paging.PagingData
 import kh.farrukh.progee.data.language.models.Language
+import kh.farrukh.progee.utils.Result
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -11,4 +12,6 @@ import kotlinx.coroutines.flow.Flow
 interface LanguageRepository {
 
     fun getPagedLanguages(): Flow<PagingData<Language>>
+
+    fun getLanguageById(languageId: Long): Flow<Result<Language>>
 }
