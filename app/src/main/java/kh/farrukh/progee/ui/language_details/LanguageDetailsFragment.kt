@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,6 +30,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
 
+    private val args by navArgs<LanguageDetailsFragmentArgs>()
     private val binding by viewBinding(FragmentLanguageDetailsBinding::bind)
     private val viewModel by viewModels<LanguageDetailsViewModel>()
     private val frameworkAdapter by lazy { FrameworkAdapter(::onFrameworkClick) }
@@ -126,6 +128,10 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
     }
 
     private fun onFrameworkClick(frameworkId: Long) {
-        // TODO: handle navigation
+        findNavController().navigate(
+            LanguageDetailsFragmentDirections.actionLanguageDetailsFragmentToFrameworkDetailsFragment(
+                args.languageId, frameworkId
+            )
+        )
     }
 }

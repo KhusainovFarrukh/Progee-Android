@@ -17,7 +17,7 @@ data class LanguageDetailsViewState(
 val LanguageDetailsViewState.isFirstLoading get() = isLoading && language == null && error == null
 val LanguageDetailsViewState.isEmpty get() = !isLoading && language == null
 
-fun Result<Language>.toMovieViewState(oldState: LanguageDetailsViewState): LanguageDetailsViewState =
+fun Result<Language>.toLanguageDetailsViewState(oldState: LanguageDetailsViewState): LanguageDetailsViewState =
     when (this) {
         is Result.Error -> oldState.copy(isLoading = false, error = error, language = data)
         is Result.Loading -> oldState.copy(isLoading = true, language = data)

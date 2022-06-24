@@ -36,7 +36,7 @@ class LanguageDetailsViewModel @Inject constructor(
 
     fun getLanguageById() = viewModelScope.launch {
         getLanguageById(languageId)
-            .map { it.toMovieViewState(_viewState.value ?: LanguageDetailsViewState()) }
+            .map { it.toLanguageDetailsViewState(_viewState.value ?: LanguageDetailsViewState()) }
             .collect(_viewState::setValue)
     }
 }
