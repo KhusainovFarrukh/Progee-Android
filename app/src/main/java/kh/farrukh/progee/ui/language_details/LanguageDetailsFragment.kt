@@ -34,6 +34,9 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
     private val binding by viewBinding(FragmentLanguageDetailsBinding::bind)
     private val viewModel by viewModels<LanguageDetailsViewModel>()
     private val frameworkAdapter by lazy { FrameworkAdapter(::onFrameworkClick) }
+    private val reviewAdapter by lazy {
+        ReviewAdapter(::onReviewClick, ::onLikeClick, ::onDislikeClick)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,6 +52,10 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
             ListLoadStateAdapter(isVertical = false) { frameworkAdapter.retry() },
             ListLoadStateAdapter(isVertical = false) { frameworkAdapter.retry() }
         )
+        rvReviews.adapter = reviewAdapter.withCustomLoadStateHeaderAndFooter(
+            ListLoadStateAdapter { reviewAdapter.retry() },
+            ListLoadStateAdapter { reviewAdapter.retry() }
+        )
     }
 
     private fun setObservers() = with(viewModel) {
@@ -56,6 +63,11 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
         frameworks.observe(viewLifecycleOwner) {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                 frameworkAdapter.submitData(it)
+            }
+        }
+        reviews.observe(viewLifecycleOwner) {
+            viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                reviewAdapter.submitData(it)
             }
         }
 
@@ -88,6 +100,20 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
                 }
 
                 loadStates.onError(::handleFrameworksError)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            // TODO: this is temp solution. And has another bug: when using only db,
+            //  if scroll many times, rv.scrollToPosition(0) is being triggered
+            reviewAdapter.loadStateFlow.collect { loadStates ->
+                if (loadStates.source.refresh is LoadState.NotLoading &&
+                    (loadStates.mediator?.refresh is LoadState.Loading ||
+                            loadStates.mediator?.refresh is LoadState.Error)
+                ) {
+                    binding.rvReviews.scrollToPosition(0)
+                }
+
+                loadStates.onError(::handleReviewsError)
             }
         }
     }
@@ -127,11 +153,27 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
         snackLong(error.message) { frameworkAdapter.retry() }
     }
 
+    private fun handleReviewsError(error: HandledError) {
+        snackLong(error.message) { reviewAdapter.retry() }
+    }
+
     private fun onFrameworkClick(frameworkId: Long) {
         findNavController().navigate(
             LanguageDetailsFragmentDirections.actionLanguageDetailsFragmentToFrameworkDetailsFragment(
                 args.languageId, frameworkId
             )
         )
+    }
+
+    private fun onReviewClick(reviewId: Long) {
+        // TODO: implement
+    }
+
+    private fun onLikeClick(reviewId: Long) {
+        // TODO: implement
+    }
+
+    private fun onDislikeClick(reviewId: Long) {
+        // TODO: implement
     }
 }

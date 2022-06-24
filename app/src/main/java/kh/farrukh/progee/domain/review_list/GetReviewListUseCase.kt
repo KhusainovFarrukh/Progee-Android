@@ -10,7 +10,7 @@ import javax.inject.Inject
  *Created by farrukh_kh on 6/25/22 12:22 AM
  *kh.farrukh.progee.domain.review_list
  **/
-class GetFrameworkListUseCase @Inject constructor(
+class GetReviewListUseCase @Inject constructor(
     private val reviewRepository: ReviewRepository
 ) {
 

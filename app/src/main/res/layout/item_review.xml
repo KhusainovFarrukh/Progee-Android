@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/margin_small"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="false"
+    app:strokeColor="@color/grey"
+    app:strokeWidth="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imv_author_image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_margin="@dimen/margin_normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/RoundImageView"
+            app:srcCompat="@drawable/ic_account_circle"
+            tools:src="@tools:sample/avatars" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_review_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            app:cardBackgroundColor="@color/black"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/imv_author_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/imv_author_image">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txv_review_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_normal"
+                android:layout_marginVertical="4dp"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                tools:text="WANT TO PRACTICE" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txv_author_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_small"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/txv_author_username"
+            app:layout_constraintEnd_toStartOf="@id/mcv_review_value"
+            app:layout_constraintStart_toEndOf="@id/imv_author_image"
+            app:layout_constraintTop_toTopOf="@id/imv_author_image"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="@tools:sample/full_names" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txv_author_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_small"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@id/imv_author_image"
+            app:layout_constraintEnd_toStartOf="@id/mcv_review_value"
+            app:layout_constraintStart_toEndOf="@id/imv_author_image"
+            app:layout_constraintTop_toBottomOf="@id/txv_author_name"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="\@kotlin_lover" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imv_author_image"
+            tools:text="Score: 13" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txv_created_at"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:textStyle="italic"
+            app:layout_constraintBaseline_toBaselineOf="@id/txv_score"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="3 days ago" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txv_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
+            android:ellipsize="end"
+            android:maxLines="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txv_score"
+            tools:text="@tools:sample/lorem/random" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txv_read_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="Read more"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:drawableEndCompat="@drawable/ic_arrow_down"
+            app:drawableTint="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txv_body" />
+
+        <View
+            android:id="@+id/divider_read_more"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="@id/txv_read_more"
+            app:layout_constraintStart_toStartOf="@id/txv_read_more"
+            app:layout_constraintTop_toBottomOf="@id/txv_read_more" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txv_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:drawablePadding="4dp"
+            android:focusable="true"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:drawableStartCompat="@drawable/ic_like"
+            app:drawableTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txv_body"
+            tools:text="24" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txv_dislike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:drawablePadding="4dp"
+            android:focusable="true"
+            android:padding="8dp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            app:drawableStartCompat="@drawable/ic_dislike"
+            app:drawableTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/txv_like"
+            app:layout_constraintTop_toBottomOf="@id/txv_body"
+            tools:text="24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

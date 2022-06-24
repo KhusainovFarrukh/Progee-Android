@@ -94,9 +94,10 @@
                 android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
                 android:orientation="vertical"
-                android:paddingHorizontal="@dimen/margin_large"
+                android:paddingHorizontal="@dimen/margin_small"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/txv_title_reviews" />
+                app:layout_constraintTop_toBottomOf="@id/txv_title_reviews"
+                tools:listitem="@layout/item_review" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottie_loading"

@@ -5,6 +5,7 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kh.farrukh.progee.domain.framework_list.GetFrameworkListUseCase
 import kh.farrukh.progee.domain.language_details.GetLanguageByIdUseCase
+import kh.farrukh.progee.domain.review_list.GetReviewListUseCase
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class LanguageDetailsViewModel @Inject constructor(
     private val getLanguageById: GetLanguageByIdUseCase,
     private val getFrameworkList: GetFrameworkListUseCase,
+    private val getReviewList: GetReviewListUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -29,6 +31,7 @@ class LanguageDetailsViewModel @Inject constructor(
     val viewState: LiveData<LanguageDetailsViewState> get() = _viewState
 
     val frameworks by lazy { getFrameworkList(languageId).asLiveData().cachedIn(viewModelScope) }
+    val reviews by lazy { getReviewList(languageId).asLiveData().cachedIn(viewModelScope) }
 
     init {
         getLanguageById()
