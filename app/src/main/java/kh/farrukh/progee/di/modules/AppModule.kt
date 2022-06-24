@@ -12,6 +12,8 @@ import kh.farrukh.progee.data.framework.FrameworkRepository
 import kh.farrukh.progee.data.framework.FrameworkRepositoryImpl
 import kh.farrukh.progee.data.language.LanguageRepository
 import kh.farrukh.progee.data.language.LanguageRepositoryImpl
+import kh.farrukh.progee.data.review.ReviewRepository
+import kh.farrukh.progee.data.review.ReviewRepositoryImpl
 import kh.farrukh.progee.db.CacheDatabase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +52,9 @@ abstract class AppBindsModule {
 
     @Binds
     abstract fun bindFrameworkRepository(frameworkRepositoryImpl: FrameworkRepositoryImpl): FrameworkRepository
+
+    @Binds
+    abstract fun bindReviewRepository(reviewRepositoryImpl: ReviewRepositoryImpl): ReviewRepository
 
 }
 

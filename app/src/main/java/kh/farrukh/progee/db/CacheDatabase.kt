@@ -12,6 +12,8 @@ import kh.farrukh.progee.db.framework.models.FrameworkRemoteKey
 import kh.farrukh.progee.db.language.LanguageDao
 import kh.farrukh.progee.db.language.LanguageRemoteKeyDao
 import kh.farrukh.progee.db.language.models.LanguageRemoteKey
+import kh.farrukh.progee.db.review.ReviewDao
+import kh.farrukh.progee.db.review.ReviewRemoteKeyDao
 
 /**
  *Created by farrukh_kh on 6/19/22 8:00 PM
@@ -35,5 +37,6 @@ abstract class CacheDatabase : RoomDatabase() {
     abstract fun languageRemoteKeyDao(): LanguageRemoteKeyDao
     abstract fun frameworkDao(): FrameworkDao
     abstract fun frameworkRemoteKeyDao(): FrameworkRemoteKeyDao
-
+    abstract fun reviewDao(): ReviewDao
+    abstract fun reviewRemoteKeyDao(): ReviewRemoteKeyDao
 }

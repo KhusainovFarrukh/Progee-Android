@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kh.farrukh.progee.api.framework.FrameworkApi
 import kh.farrukh.progee.api.language.LanguageApi
+import kh.farrukh.progee.api.review.ReviewApi
 import kh.farrukh.progee.utils.BASE_URL_PROGEE_API
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -52,5 +53,8 @@ object ApiModule {
 
     @Provides
     fun provideFrameworkApi(retrofit: Retrofit): FrameworkApi = retrofit.create()
+
+    @Provides
+    fun provideReviewApi(retrofit: Retrofit): ReviewApi = retrofit.create()
 
 }
