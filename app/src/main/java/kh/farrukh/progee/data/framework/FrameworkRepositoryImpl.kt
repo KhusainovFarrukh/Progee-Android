@@ -29,16 +29,16 @@ class FrameworkRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : FrameworkRepository {
 
-    override fun getPagedFrameworks(): Flow<PagingData<Framework>> = Pager(
+    override fun getPagedFrameworks(languageId: Long): Flow<PagingData<Framework>> = Pager(
         config = PagingConfig(pageSize = 10),
-        remoteMediator = FrameworkRemoteMediator(frameworkApi, cacheDatabase)
+        remoteMediator = FrameworkRemoteMediator(languageId, frameworkApi, cacheDatabase)
     ) {
-        cacheDatabase.frameworkDao().frameworkPagingSource()
+        cacheDatabase.frameworkDao().frameworkPagingSourceByLanguageId(languageId)
     }.flow
 
-    override fun getFrameworkById(frameworkId: Long): Flow<Result<Framework>> =
+    override fun getFrameworkById(languageId: Long, frameworkId: Long): Flow<Result<Framework>> =
         requestWithLocalCache(
-            remoteFetch = { remoteDataSource.getFrameworkById(frameworkId) },
+            remoteFetch = { remoteDataSource.getFrameworkById(languageId, frameworkId) },
             localQuery = { localDataSource.getFrameworkById(frameworkId) },
             saveFetchResult = { language -> localDataSource.saveFramework(language) },
             remoteResponseMapper = { apiModel -> apiModel.toFramework() },

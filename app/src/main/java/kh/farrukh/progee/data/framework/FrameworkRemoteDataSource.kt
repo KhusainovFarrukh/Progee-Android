@@ -12,6 +12,6 @@ class FrameworkRemoteDataSource @Inject constructor(
     private val frameworkApi: FrameworkApi
 ) {
 
-    suspend fun getFrameworkById(frameworkId: Long): FrameworkApiModel =
-        frameworkApi.getFrameworkById(frameworkId)
+    suspend fun getFrameworkById(languageId: Long, frameworkId: Long): FrameworkApiModel =
+        frameworkApi.getFrameworkById(languageId, frameworkId)
 }

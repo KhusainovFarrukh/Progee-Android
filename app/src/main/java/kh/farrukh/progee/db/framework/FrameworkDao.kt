@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FrameworkDao {
 
-    @Query("SELECT * FROM frameworks")
-    fun frameworkPagingSource(): PagingSource<Int, Framework>
+    @Query("SELECT * FROM frameworks WHERE language_id = :languageId")
+    fun frameworkPagingSourceByLanguageId(languageId: Long): PagingSource<Int, Framework>
 
     @Query("SELECT * FROM frameworks WHERE id = :frameworkId")
     fun getFrameworkById(frameworkId: Long): Flow<Framework>

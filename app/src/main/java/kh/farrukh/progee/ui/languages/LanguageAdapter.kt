@@ -19,7 +19,7 @@ import kh.farrukh.progee.utils.loadImageById
  **/
 class LanguageAdapter(
     private val onLanguageClick: SingleBlock<Long>,
-) : PagingDataAdapter<Language, LanguageAdapter.LanguageVH>(MOVIE_ITEM_DIFF_CALLBACK) {
+) : PagingDataAdapter<Language, LanguageAdapter.LanguageVH>(LANGUAGE_ITEM_DIFF_CALLBACK) {
 
     //variables to know if there is header/footer in the list or not
     private var hasHeader = false
@@ -30,7 +30,7 @@ class LanguageAdapter(
     )
 
     override fun onBindViewHolder(holder: LanguageVH, position: Int) {
-        getItem(position)?.let { movie -> holder.onBindMovie(movie) }
+        getItem(position)?.let { movie -> holder.bindLanguage(movie) }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -115,7 +115,7 @@ class LanguageAdapter(
             }
         }
 
-        fun onBindMovie(language: Language) = with(binding) {
+        fun bindLanguage(language: Language) = with(binding) {
 
             tvTitle.text = language.name
             imvImage.loadImageById(language.image.id)
@@ -126,7 +126,7 @@ class LanguageAdapter(
         const val VIEW_TYPE_LANGUAGE = 1
         const val VIEW_TYPE_LOADING = 2
 
-        val MOVIE_ITEM_DIFF_CALLBACK = object : DiffUtil.ItemCallback<Language>() {
+        val LANGUAGE_ITEM_DIFF_CALLBACK = object : DiffUtil.ItemCallback<Language>() {
             override fun areItemsTheSame(oldItem: Language, newItem: Language) =
                 oldItem.id == newItem.id
 

@@ -14,6 +14,6 @@ class GetFrameworkByIdUseCase @Inject constructor(
     private val frameworkRepository: FrameworkRepository
 ) {
 
-    operator fun invoke(frameworkId: Long): Flow<Result<Framework>> =
-        frameworkRepository.getFrameworkById(frameworkId)
+    operator fun invoke(languageId: Long, frameworkId: Long): Flow<Result<Framework>> =
+        frameworkRepository.getFrameworkById(languageId, frameworkId)
 }

@@ -18,6 +18,7 @@ import java.io.IOException
  **/
 @OptIn(ExperimentalPagingApi::class)
 class FrameworkRemoteMediator(
+    private val languageId: Long,
     private val frameworkApi: FrameworkApi,
     private val cacheDatabase: CacheDatabase
 ) : RemoteMediator<Int, Framework>() {
@@ -49,17 +50,16 @@ class FrameworkRemoteMediator(
             }
 
             // TODO: handle nullability (if Response wrapper is used)
-            val response = frameworkApi.getFrameworks(page = page)
+            val response = frameworkApi.getFrameworks(languageId = languageId, page = page)
 
             val endOfPaginationReached = response.page >= response.totalPages
 
             cacheDatabase.withTransaction {
-                // TODO: removed for task: Don't overwrite favState of movies on list/search queries
-                //      if uncomment this lines, movieDao.upsertMoviesWithoutFavState() won't work
-                if (loadType == LoadType.REFRESH) {
-                    frameworkDao.deleteAll()
-                    remoteKeyDao.deleteAll()
-                }
+                // TODO: test
+//                if (loadType == LoadType.REFRESH) {
+//                    frameworkDao.deleteAll()
+//                    remoteKeyDao.deleteAll()
+//                }
 
                 val prevPage = response.prevPage
                 val nextPage = response.nextPage

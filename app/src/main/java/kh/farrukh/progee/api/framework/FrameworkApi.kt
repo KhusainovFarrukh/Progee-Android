@@ -14,8 +14,9 @@ import retrofit2.http.Query
  **/
 interface FrameworkApi {
 
-    @GET("frameworks")
+    @GET("languages/{languageId}/frameworks")
     suspend fun getFrameworks(
+        @Path("languageId") languageId: Long,
         @Query("state") state: PublishState? = null,
         @Query("page") page: Int = 1,
         @Query("page_size") pageSize: Int = 10,
@@ -23,8 +24,9 @@ interface FrameworkApi {
         @Query("order_by") orderBy: String? = null
     ): PagingApiResponse<FrameworkApiModel>
 
-    @GET("frameworks/{frameworkId}")
+    @GET("languages/{languageId}/frameworks/{frameworkId}")
     suspend fun getFrameworkById(
+        @Path("languageId") languageId: Long,
         @Path("frameworkId") frameworkId: Long
     ): FrameworkApiModel
 }

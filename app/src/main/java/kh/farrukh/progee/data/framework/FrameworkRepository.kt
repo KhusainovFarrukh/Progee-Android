@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
  **/
 interface FrameworkRepository {
 
-    fun getPagedFrameworks(): Flow<PagingData<Framework>>
+    fun getPagedFrameworks(languageId: Long): Flow<PagingData<Framework>>
 
-    fun getFrameworkById(frameworkId: Long): Flow<Result<Framework>>
+    fun getFrameworkById(languageId: Long, frameworkId: Long): Flow<Result<Framework>>
 }

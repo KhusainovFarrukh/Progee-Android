@@ -54,12 +54,11 @@ class LanguageRemoteMediator(
             val endOfPaginationReached = response.page >= response.totalPages
 
             cacheDatabase.withTransaction {
-                // TODO: removed for task: Don't overwrite favState of movies on list/search queries
-                //      if uncomment this lines, movieDao.upsertMoviesWithoutFavState() won't work
-                if (loadType == LoadType.REFRESH) {
-                    languageDao.deleteAll()
-                    remoteKeyDao.deleteAll()
-                }
+                // TODO: test
+//                if (loadType == LoadType.REFRESH) {
+//                    languageDao.deleteAll()
+//                    remoteKeyDao.deleteAll()
+//                }
 
                 val prevPage = response.prevPage
                 val nextPage = response.nextPage

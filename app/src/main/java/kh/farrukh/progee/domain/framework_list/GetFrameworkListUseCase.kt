@@ -14,6 +14,6 @@ class GetFrameworkListUseCase @Inject constructor(
     private val frameworkRepository: FrameworkRepository
 ) {
 
-    operator fun invoke(): Flow<PagingData<Framework>> =
-        frameworkRepository.getPagedFrameworks()
+    operator fun invoke(languageId: Long): Flow<PagingData<Framework>> =
+        frameworkRepository.getPagedFrameworks(languageId)
 }
