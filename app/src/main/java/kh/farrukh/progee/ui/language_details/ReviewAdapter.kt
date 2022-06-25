@@ -2,6 +2,7 @@ package kh.farrukh.progee.ui.language_details
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.OvershootInterpolator
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.paging.PagingDataAdapter
@@ -12,6 +13,7 @@ import kh.farrukh.progee.R
 import kh.farrukh.progee.data.review.models.Review
 import kh.farrukh.progee.databinding.ItemReviewBinding
 import kh.farrukh.progee.utils.SingleBlock
+import kh.farrukh.progee.utils.calculateCreatedOn
 import kh.farrukh.progee.utils.loadImageById
 
 /**
@@ -69,6 +71,17 @@ class ReviewAdapter(
                         ?: throw NullPointerException("There is no review")
                 )
             }
+            binding.txvReadMore.setOnClickListener {
+                binding.txvReadMore.text =
+                    if (binding.txvBody.isExpanded) "Read more" else "Read less"
+                binding.txvReadMore.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    0,
+                    0,
+                    if (binding.txvBody.isExpanded) R.drawable.ic_arrow_down else R.drawable.ic_arrow_up,
+                    0
+                )
+                binding.txvBody.toggle()
+            }
         }
 
         fun bindReview(review: Review) = with(binding) {
@@ -81,10 +94,9 @@ class ReviewAdapter(
 
             txvReviewValue.text = review.value.name
             txvScore.text = "Score: ${review.score}"
-            // TODO: implement %s time ago
-            txvCreatedAt.text = review.createdAt
-            // TODO: implement read more
+            txvCreatedAt.text = review.createdAt.calculateCreatedOn(root.context)
             txvBody.text = review.body
+            txvBody.setInterpolator(OvershootInterpolator())
             txvLike.text = review.upVotes.size.toString()
             txvDislike.text = review.downVotes.size.toString()
         }
