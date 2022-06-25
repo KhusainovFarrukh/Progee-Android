@@ -69,7 +69,8 @@ class FrameworkAdapter(
                 oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: Framework, newItem: Framework) =
-                oldItem == newItem
+                oldItem.name == newItem.name &&
+                        oldItem.image == newItem.image
         }
     }
 }

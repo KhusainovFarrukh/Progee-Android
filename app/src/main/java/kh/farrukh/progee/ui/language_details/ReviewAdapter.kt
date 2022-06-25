@@ -108,7 +108,15 @@ class ReviewAdapter(
                 oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: Review, newItem: Review) =
-                oldItem == newItem
+                oldItem.body == newItem.body &&
+                        oldItem.author == newItem.author &&
+                        oldItem.value == newItem.value &&
+                        oldItem.score == newItem.score &&
+                        oldItem.createdAt == newItem.createdAt &&
+                        oldItem.upVotes.containsAll(newItem.upVotes) &&
+                        newItem.upVotes.containsAll(oldItem.upVotes) &&
+                        oldItem.downVotes.containsAll(newItem.upVotes) &&
+                        newItem.downVotes.containsAll(oldItem.downVotes)
         }
     }
 }

@@ -131,7 +131,8 @@ class LanguageAdapter(
                 oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: Language, newItem: Language) =
-                oldItem == newItem
+                oldItem.name == newItem.name &&
+                        oldItem.image == newItem.image
         }
     }
 }
