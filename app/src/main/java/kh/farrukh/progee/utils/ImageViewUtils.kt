@@ -20,11 +20,17 @@ fun ImageView.loadImage(
     val glide = Glide.with(context).load(url)
 
     if (imageOptions == null) {
-        glide
-            .thumbnail(Glide.with(context).load(placeholder).centerCrop())
+
+        val customOptions = RequestOptions()
+            .placeholder(placeholder)
+            .error(placeholder)
+            .fallback(placeholder)
             .dontAnimate()
             .fitCenter()
-            .error(R.drawable.placeholder_image)
+
+        glide
+            .thumbnail(Glide.with(context).load(placeholder).centerCrop())
+            .apply(customOptions)
             .into(this)
     } else {
         glide
@@ -38,8 +44,15 @@ fun ImageView.loadImage(
 fun ImageView.loadImageById(
     imageId: Long,
     @DrawableRes placeholder: Int = R.drawable.placeholder_image,
-    imageOptions: RequestOptions? = null
 ) {
+
+    val imageOptions = RequestOptions()
+        .placeholder(placeholder)
+        .error(placeholder)
+        .fallback(placeholder)
+        .dontAnimate()
+        .fitCenter()
+
     loadImage(
         "${BASE_URL_PROGEE_API}images/$imageId/download",
         placeholder,
