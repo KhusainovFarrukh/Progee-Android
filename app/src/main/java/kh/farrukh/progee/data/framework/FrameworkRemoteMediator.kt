@@ -55,19 +55,17 @@ class FrameworkRemoteMediator(
             val endOfPaginationReached = response.page >= response.totalPages
 
             cacheDatabase.withTransaction {
-                // TODO: test
-//                if (loadType == LoadType.REFRESH) {
-//                    frameworkDao.deleteAll()
-//                    remoteKeyDao.deleteAll()
-//                }
+                // TODO: needs logic change
+                if (loadType == LoadType.REFRESH) {
+                    frameworkDao.deleteAll()
+                    remoteKeyDao.deleteAll()
+                }
 
-                val prevPage = response.prevPage
-                val nextPage = response.nextPage
                 val keys = response.items.map { framework ->
                     FrameworkRemoteKey(
                         frameworkId = framework.id,
-                        prevPage = prevPage,
-                        nextPage = nextPage
+                        prevPage = response.prevPage,
+                        nextPage = response.nextPage
                     )
                 }
 
@@ -85,24 +83,20 @@ class FrameworkRemoteMediator(
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Framework>): FrameworkRemoteKey? {
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
-            ?.let { language ->
-                remoteKeyDao.getRemoteKeyByFrameworkId(language.id)
-            }
+            ?.let { framework -> remoteKeyDao.getRemoteKeyByFrameworkId(framework.id) }
     }
 
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Framework>): FrameworkRemoteKey? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
-            ?.let { language ->
-                remoteKeyDao.getRemoteKeyByFrameworkId(language.id)
-            }
+            ?.let { framework -> remoteKeyDao.getRemoteKeyByFrameworkId(framework.id) }
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
         state: PagingState<Int, Framework>
     ): FrameworkRemoteKey? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.id?.let { languageId ->
-                remoteKeyDao.getRemoteKeyByFrameworkId(languageId)
+            state.closestItemToPosition(position)?.id?.let { frameworkId ->
+                remoteKeyDao.getRemoteKeyByFrameworkId(frameworkId)
             }
         }
     }

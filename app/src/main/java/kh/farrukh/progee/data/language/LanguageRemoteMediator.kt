@@ -54,19 +54,17 @@ class LanguageRemoteMediator(
             val endOfPaginationReached = response.page >= response.totalPages
 
             cacheDatabase.withTransaction {
-                // TODO: test
-//                if (loadType == LoadType.REFRESH) {
-//                    languageDao.deleteAll()
-//                    remoteKeyDao.deleteAll()
-//                }
+                // TODO: needs logic change
+                if (loadType == LoadType.REFRESH) {
+                    languageDao.deleteAll()
+                    remoteKeyDao.deleteAll()
+                }
 
-                val prevPage = response.prevPage
-                val nextPage = response.nextPage
                 val keys = response.items.map { language ->
                     LanguageRemoteKey(
                         languageId = language.id,
-                        prevPage = prevPage,
-                        nextPage = nextPage
+                        prevPage = response.prevPage,
+                        nextPage = response.nextPage
                     )
                 }
 
@@ -84,16 +82,12 @@ class LanguageRemoteMediator(
 
     private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, Language>): LanguageRemoteKey? {
         return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()
-            ?.let { language ->
-                remoteKeyDao.getRemoteKeyByLanguageId(language.id)
-            }
+            ?.let { language -> remoteKeyDao.getRemoteKeyByLanguageId(language.id) }
     }
 
     private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, Language>): LanguageRemoteKey? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
-            ?.let { language ->
-                remoteKeyDao.getRemoteKeyByLanguageId(language.id)
-            }
+            ?.let { language -> remoteKeyDao.getRemoteKeyByLanguageId(language.id) }
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
