@@ -6,6 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kh.farrukh.progee.api.language.LanguageApi
 import kh.farrukh.progee.data.language.models.Language
+import kh.farrukh.progee.data.language.models.SortType
 import kh.farrukh.progee.db.CacheDatabase
 import kh.farrukh.progee.di.modules.IoDispatcher
 import kh.farrukh.progee.utils.NetworkHelper
@@ -29,9 +30,9 @@ class LanguageRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : LanguageRepository {
 
-    override fun getPagedLanguages(): Flow<PagingData<Language>> = Pager(
+    override fun getPagedLanguages(sortType: SortType): Flow<PagingData<Language>> = Pager(
         config = PagingConfig(pageSize = 10),
-        remoteMediator = LanguageRemoteMediator(languageApi, cacheDatabase)
+        remoteMediator = LanguageRemoteMediator(sortType, languageApi, cacheDatabase)
     ) {
         cacheDatabase.languageDao().languagePagingSource()
     }.flow

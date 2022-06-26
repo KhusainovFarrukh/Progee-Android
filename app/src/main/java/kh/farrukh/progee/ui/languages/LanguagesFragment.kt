@@ -1,7 +1,10 @@
 package kh.farrukh.progee.ui.languages
 
+import android.annotation.SuppressLint
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -13,10 +16,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kh.farrukh.movix.utils.error_handle.HandledError
 import kh.farrukh.movix.utils.error_handle.onError
 import kh.farrukh.progee.R
+import kh.farrukh.progee.data.language.models.SortType
+import kh.farrukh.progee.data.language.models.languageSortTypes
 import kh.farrukh.progee.databinding.FragmentLanguagesBinding
 import kh.farrukh.progee.ui.global.ListLoadStateAdapter
+import kh.farrukh.progee.ui.global.SortByAdapter
 import kh.farrukh.progee.ui.languages.LanguageAdapter.Companion.VIEW_TYPE_LANGUAGE
 import kh.farrukh.progee.ui.languages.LanguageAdapter.Companion.VIEW_TYPE_LOADING
+import kh.farrukh.progee.utils.fadeTo
 import kh.farrukh.progee.utils.snackShort
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -32,6 +39,7 @@ class LanguagesFragment : Fragment(R.layout.fragment_languages) {
     private val binding by viewBinding(FragmentLanguagesBinding::bind)
     private val viewModel by viewModels<LanguagesViewModel>()
     private val languageAdapter by lazy { LanguageAdapter(::onLanguageClick) }
+    private val sortByAdapter by lazy { SortByAdapter(languageSortTypes(), ::onSortTypeClicked) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,7 +48,25 @@ class LanguagesFragment : Fragment(R.layout.fragment_languages) {
         setObservers()
     }
 
-    private fun setupUi() = with(binding.rvLanguages) {
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setupUi() = with(binding) {
+        rvSortType.adapter = sortByAdapter
+        mcvSortBy.setOnClickListener { mcvSortMenu.fadeTo(!binding.mcvSortMenu.isVisible) }
+        touchOutside.setOnTouchListener { _, event ->
+            if (mcvSortMenu.isVisible) {
+                val sortByRect = Rect()
+                mcvSortMenu.getGlobalVisibleRect(sortByRect)
+
+                if (!sortByRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    mcvSortMenu.fadeTo(false)
+                    true
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        }
 
         val gridLayoutManager = GridLayoutManager(context, 2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -53,9 +79,9 @@ class LanguagesFragment : Fragment(R.layout.fragment_languages) {
             }
         }
 
-        setHasFixedSize(true)
-        layoutManager = gridLayoutManager
-        adapter = languageAdapter.withCustomLoadStateHeaderAndFooter(
+        rvLanguages.setHasFixedSize(true)
+        rvLanguages.layoutManager = gridLayoutManager
+        rvLanguages.adapter = languageAdapter.withCustomLoadStateHeaderAndFooter(
             ListLoadStateAdapter { languageAdapter.retry() },
             ListLoadStateAdapter { languageAdapter.retry() }
         )
@@ -103,6 +129,12 @@ class LanguagesFragment : Fragment(R.layout.fragment_languages) {
     // TODO: but don't forget about initial loading (when list is empty)
     private fun showError(error: HandledError) {
         snackShort(error.message) { languageAdapter.retry() }
+    }
+
+    private fun onSortTypeClicked(sortType: SortType) {
+        binding.tvSortBy.text = "Sort: by ${sortType.label}"
+        viewModel.setSortType(sortType)
+        binding.mcvSortMenu.fadeTo(false)
     }
 
     private fun onLanguageClick(languageId: Long) {

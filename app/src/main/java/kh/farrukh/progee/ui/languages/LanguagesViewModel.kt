@@ -1,10 +1,9 @@
 package kh.farrukh.progee.ui.languages
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kh.farrukh.progee.data.language.models.SortType
 import kh.farrukh.progee.domain.language_list.GetLanguageListUseCase
 import javax.inject.Inject
 
@@ -17,5 +16,12 @@ class LanguagesViewModel @Inject constructor(
     private val getLanguageList: GetLanguageListUseCase
 ) : ViewModel() {
 
-    val languages by lazy { getLanguageList().asLiveData().cachedIn(viewModelScope) }
+    private val sortType = MutableLiveData<SortType>(SortType.Default)
+    val languages = sortType.switchMap { sortType ->
+        getLanguageList(sortType).asLiveData().cachedIn(viewModelScope)
+    }
+
+    fun setSortType(sortType: SortType) {
+        this.sortType.value = sortType
+    }
 }

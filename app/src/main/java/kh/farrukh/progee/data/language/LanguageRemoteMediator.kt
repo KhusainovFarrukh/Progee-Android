@@ -7,6 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import kh.farrukh.progee.api.language.LanguageApi
 import kh.farrukh.progee.data.language.models.Language
+import kh.farrukh.progee.data.language.models.SortType
 import kh.farrukh.progee.db.CacheDatabase
 import kh.farrukh.progee.db.language.models.LanguageRemoteKey
 import retrofit2.HttpException
@@ -18,6 +19,7 @@ import java.io.IOException
  **/
 @OptIn(ExperimentalPagingApi::class)
 class LanguageRemoteMediator(
+    private val sortType: SortType,
     private val languageApi: LanguageApi,
     private val cacheDatabase: CacheDatabase
 ) : RemoteMediator<Int, Language>() {
@@ -49,7 +51,11 @@ class LanguageRemoteMediator(
             }
 
             // TODO: handle nullability (if Response wrapper is used)
-            val response = languageApi.getLanguages(page = page)
+            val response = languageApi.getLanguages(
+                page = page,
+                sortBy = sortType.sortBy,
+                orderBy = sortType.orderBy
+            )
 
             val endOfPaginationReached = response.page >= response.totalPages
 

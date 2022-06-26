@@ -31,6 +31,38 @@
             app:drawableTint="@color/black" />
     </com.google.android.material.card.MaterialCardView>
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_65"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.65" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/mcv_sort_menu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toStartOf="@id/gl_65"
+        app:layout_constraintStart_toStartOf="@id/mcv_sort_by"
+        app:layout_constraintTop_toBottomOf="@id/mcv_sort_by">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_sort_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_sort_type" />
+
+    </com.google.android.material.card.MaterialCardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_languages"
         android:layout_width="0dp"
@@ -46,5 +78,10 @@
         app:layout_constraintTop_toBottomOf="@id/mcv_sort_by"
         tools:listitem="@layout/item_language"
         tools:spanCount="2" />
+
+    <FrameLayout
+        android:id="@+id/touch_outside"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
