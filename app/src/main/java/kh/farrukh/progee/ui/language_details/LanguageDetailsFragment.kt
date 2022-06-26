@@ -20,6 +20,7 @@ import kh.farrukh.progee.databinding.FragmentLanguageDetailsBinding
 import kh.farrukh.progee.ui.global.ListLoadStateAdapter
 import kh.farrukh.progee.utils.error_handle.HandledError
 import kh.farrukh.progee.utils.error_handle.onError
+import kh.farrukh.progee.utils.fadeTo
 import kh.farrukh.progee.utils.loadImageById
 import kh.farrukh.progee.utils.snackLong
 import kotlinx.coroutines.Dispatchers
@@ -173,7 +174,7 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
     }
 
     private fun setIsLoading(isLoading: Boolean) = with(binding) {
-        lottieLoading.isVisible = isLoading
+        lottieLoading.fadeTo(isLoading)
     }
 
     private fun handleLanguageError(error: HandledError) {

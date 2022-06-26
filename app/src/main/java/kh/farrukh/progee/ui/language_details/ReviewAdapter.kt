@@ -92,7 +92,7 @@ class ReviewAdapter(
             txvAuthorName.text = review.author.name
             txvAuthorUsername.text = "@${review.author.username}"
 
-            txvReviewValue.text = review.value.name
+            txvReviewValue.text = review.value.name.replace("_", " ")
             txvScore.text = "Score: ${review.score}"
             txvCreatedAt.text = review.createdAt.calculateCreatedOn(root.context)
             txvBody.text = review.body

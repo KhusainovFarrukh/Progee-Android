@@ -12,6 +12,7 @@ import kh.farrukh.progee.utils.error_handle.HandledError
 import kh.farrukh.progee.R
 import kh.farrukh.progee.data.framework.models.Framework
 import kh.farrukh.progee.databinding.FragmentFrameworkDetailsBinding
+import kh.farrukh.progee.utils.fadeTo
 import kh.farrukh.progee.utils.loadImageById
 import kh.farrukh.progee.utils.snackLong
 
@@ -65,7 +66,7 @@ class FrameworkDetailsFragment : Fragment(R.layout.fragment_framework_details) {
     }
 
     private fun setIsLoading(isLoading: Boolean) = with(binding) {
-        lottieLoading.isVisible = isLoading
+        lottieLoading.fadeTo( isLoading)
     }
 
     private fun handleLanguageError(error: HandledError) {
