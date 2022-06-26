@@ -132,7 +132,7 @@ class LanguagesFragment : Fragment(R.layout.fragment_languages) {
     }
 
     private fun onSortTypeClicked(sortType: SortType) {
-        binding.tvSortBy.text = "Sort: by ${sortType.label}"
+        binding.tvSortBy.text = "Sort by: ${sortType.label}"
         viewModel.setSortType(sortType)
         binding.mcvSortMenu.fadeTo(false)
     }

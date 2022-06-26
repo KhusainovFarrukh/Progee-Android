@@ -1,6 +1,5 @@
 package kh.farrukh.progee.data.framework.models
 
-import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -27,6 +26,5 @@ data class Framework(
     val image: Image,
     @Embedded(prefix = "author_")
     val author: User,
-    @ColumnInfo(name = "created_at")
     val createdAt: String
 )
