@@ -1,10 +1,8 @@
 package kh.farrukh.progee.db.language
 
 import androidx.paging.PagingSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 import kh.farrukh.progee.data.language.models.Language
 import kotlinx.coroutines.flow.Flow
 
@@ -15,8 +13,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LanguageDao {
 
-    @Query("SELECT * FROM languages")
-    fun languagePagingSource(): PagingSource<Int, Language>
+    @RawQuery(observedEntities = [Language::class])
+    fun languagePagingSource(query: SupportSQLiteQuery): PagingSource<Int, Language>
 
     @Query("SELECT * FROM languages WHERE id = :languageId")
     fun getLanguageById(languageId: Long): Flow<Language>

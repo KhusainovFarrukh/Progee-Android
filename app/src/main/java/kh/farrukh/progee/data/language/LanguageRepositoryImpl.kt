@@ -4,6 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.sqlite.db.SimpleSQLiteQuery
 import kh.farrukh.progee.api.language.LanguageApi
 import kh.farrukh.progee.data.language.models.Language
 import kh.farrukh.progee.data.language.models.SortType
@@ -34,7 +35,11 @@ class LanguageRepositoryImpl @Inject constructor(
         config = PagingConfig(pageSize = 10),
         remoteMediator = LanguageRemoteMediator(sortType, languageApi, cacheDatabase)
     ) {
-        cacheDatabase.languageDao().languagePagingSource()
+        cacheDatabase.languageDao().languagePagingSource(
+            SimpleSQLiteQuery(
+                "SELECT * FROM languages ORDER BY ${sortType.sortBy} ${sortType.orderBy.uppercase()}"
+            )
+        )
     }.flow
 
     override fun getLanguageById(languageId: Long): Flow<Result<Language>> = requestWithLocalCache(

@@ -1,7 +1,8 @@
 package kh.farrukh.progee.data.language.models
 
-import androidx.room.*
-import com.google.gson.annotations.SerializedName
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kh.farrukh.progee.api.global.models.PublishState
 import kh.farrukh.progee.data.image.models.Image
 import kh.farrukh.progee.data.user.models.User
@@ -22,6 +23,5 @@ data class Language(
     val image: Image,
     @Embedded(prefix = "author_")
     val author: User,
-    @ColumnInfo(name = "created_at")
     val createdAt: String
 )
