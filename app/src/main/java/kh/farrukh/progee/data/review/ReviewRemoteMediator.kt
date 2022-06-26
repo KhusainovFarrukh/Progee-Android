@@ -6,6 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import kh.farrukh.progee.api.review.ReviewApi
+import kh.farrukh.progee.api.review.models.ReviewValue
 import kh.farrukh.progee.data.review.models.Review
 import kh.farrukh.progee.db.CacheDatabase
 import kh.farrukh.progee.db.review.models.ReviewRemoteKey
@@ -19,6 +20,7 @@ import java.io.IOException
 @OptIn(ExperimentalPagingApi::class)
 class ReviewRemoteMediator(
     private val languageId: Long,
+    private val value: ReviewValue?,
     private val reviewApi: ReviewApi,
     private val cacheDatabase: CacheDatabase
 ) : RemoteMediator<Int, Review>() {
@@ -50,7 +52,7 @@ class ReviewRemoteMediator(
             }
 
             // TODO: handle nullability (if Response wrapper is used)
-            val response = reviewApi.getReviews(languageId = languageId, page = page)
+            val response = reviewApi.getReviews(languageId = languageId, page = page, value = value)
 
             val endOfPaginationReached = response.page >= response.totalPages
 

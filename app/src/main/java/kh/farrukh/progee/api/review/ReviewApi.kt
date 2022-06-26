@@ -2,6 +2,7 @@ package kh.farrukh.progee.api.review
 
 import kh.farrukh.progee.api.global.models.PagingApiResponse
 import kh.farrukh.progee.api.review.models.ReviewApiModel
+import kh.farrukh.progee.api.review.models.ReviewValue
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -15,6 +16,7 @@ interface ReviewApi {
     @GET("languages/{languageId}/reviews")
     suspend fun getReviews(
         @Path("languageId") languageId: Long,
+        @Query("value") value: ReviewValue? = null,
         @Query("page") page: Int = 1,
         @Query("page_size") pageSize: Int = 10,
         @Query("sort_by") sortBy: String? = null,

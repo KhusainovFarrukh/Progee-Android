@@ -5,6 +5,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import kh.farrukh.progee.api.review.ReviewApi
+import kh.farrukh.progee.api.review.models.ReviewValue
 import kh.farrukh.progee.data.review.models.Review
 import kh.farrukh.progee.db.CacheDatabase
 import kh.farrukh.progee.di.modules.IoDispatcher
@@ -29,9 +30,9 @@ class ReviewRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ReviewRepository {
 
-    override fun getPagedReviews(languageId: Long): Flow<PagingData<Review>> = Pager(
+    override fun getPagedReviews(languageId: Long, value: ReviewValue?): Flow<PagingData<Review>> = Pager(
         config = PagingConfig(pageSize = 10),
-        remoteMediator = ReviewRemoteMediator(languageId, reviewApi, cacheDatabase)
+        remoteMediator = ReviewRemoteMediator(languageId, value, reviewApi, cacheDatabase)
     ) {
         cacheDatabase.reviewDao().reviewPagingSourceByLanguageId(languageId)
     }.flow

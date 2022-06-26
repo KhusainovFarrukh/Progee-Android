@@ -1,6 +1,7 @@
 package kh.farrukh.progee.data.review
 
 import androidx.paging.PagingData
+import kh.farrukh.progee.api.review.models.ReviewValue
 import kh.farrukh.progee.data.review.models.Review
 import kh.farrukh.progee.utils.Result
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
  **/
 interface ReviewRepository {
 
-    fun getPagedReviews(languageId: Long): Flow<PagingData<Review>>
+    fun getPagedReviews(languageId: Long, value: ReviewValue?): Flow<PagingData<Review>>
 
     fun getReviewById(languageId: Long, reviewId: Long): Flow<Result<Review>>
 }
