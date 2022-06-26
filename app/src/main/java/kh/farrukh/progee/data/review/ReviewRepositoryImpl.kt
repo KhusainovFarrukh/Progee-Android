@@ -30,12 +30,17 @@ class ReviewRepositoryImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : ReviewRepository {
 
-    override fun getPagedReviews(languageId: Long, value: ReviewValue?): Flow<PagingData<Review>> = Pager(
-        config = PagingConfig(pageSize = 10),
-        remoteMediator = ReviewRemoteMediator(languageId, value, reviewApi, cacheDatabase)
-    ) {
-        cacheDatabase.reviewDao().reviewPagingSourceByLanguageId(languageId)
-    }.flow
+    override fun getPagedReviews(languageId: Long, value: ReviewValue?): Flow<PagingData<Review>> =
+        Pager(
+            config = PagingConfig(pageSize = 10),
+            remoteMediator = ReviewRemoteMediator(languageId, value, reviewApi, cacheDatabase)
+        ) {
+            if (value == null) {
+                cacheDatabase.reviewDao().reviewPagingSourceByLanguageId(languageId)
+            } else {
+                cacheDatabase.reviewDao().reviewPagingSourceByLanguageIdAndValue(languageId, value)
+            }
+        }.flow
 
     override fun getReviewById(languageId: Long, reviewId: Long): Flow<Result<Review>> =
         requestWithLocalCache(

@@ -1,6 +1,6 @@
 package kh.farrukh.progee.ui.language_details
 
-import kh.farrukh.movix.utils.error_handle.HandledError
+import kh.farrukh.progee.utils.error_handle.HandledError
 import kh.farrukh.progee.data.language.models.Language
 import kh.farrukh.progee.utils.Result
 

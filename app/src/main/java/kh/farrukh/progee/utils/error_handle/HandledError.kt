@@ -1,4 +1,4 @@
-package kh.farrukh.movix.utils.error_handle
+package kh.farrukh.progee.utils.error_handle
 
 /**
  *Created by farrukh_kh on 3/25/22 3:58 PM

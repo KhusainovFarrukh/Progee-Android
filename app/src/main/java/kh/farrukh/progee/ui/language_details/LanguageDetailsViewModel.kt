@@ -3,6 +3,7 @@ package kh.farrukh.progee.ui.language_details
 import androidx.lifecycle.*
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kh.farrukh.progee.api.review.models.ReviewValue
 import kh.farrukh.progee.domain.framework_list.GetFrameworkListUseCase
 import kh.farrukh.progee.domain.language_details.GetLanguageByIdUseCase
 import kh.farrukh.progee.domain.review_list.GetReviewListUseCase
@@ -31,7 +32,11 @@ class LanguageDetailsViewModel @Inject constructor(
     val viewState: LiveData<LanguageDetailsViewState> get() = _viewState
 
     val frameworks by lazy { getFrameworkList(languageId).asLiveData().cachedIn(viewModelScope) }
-    val reviews by lazy { getReviewList(languageId).asLiveData().cachedIn(viewModelScope) }
+
+    private val reviewValue = MutableLiveData<ReviewValue?>(null)
+    val reviews = reviewValue.switchMap { reviewValue ->
+        getReviewList(languageId, reviewValue).asLiveData().cachedIn(viewModelScope)
+    }
 
     init {
         getLanguageById()
@@ -41,5 +46,9 @@ class LanguageDetailsViewModel @Inject constructor(
         getLanguageById(languageId)
             .map { it.toLanguageDetailsViewState(_viewState.value ?: LanguageDetailsViewState()) }
             .collect(_viewState::setValue)
+    }
+
+    fun setReviewValue(reviewValue: ReviewValue?) {
+        this.reviewValue.value = reviewValue
     }
 }

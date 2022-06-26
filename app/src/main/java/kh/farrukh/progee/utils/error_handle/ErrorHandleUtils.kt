@@ -1,4 +1,4 @@
-package kh.farrukh.movix.utils.error_handle
+package kh.farrukh.progee.utils.error_handle
 
 import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState

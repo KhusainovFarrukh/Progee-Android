@@ -1,8 +1,8 @@
 package kh.farrukh.progee.utils
 
-import kh.farrukh.movix.utils.error_handle.HandledError
-import kh.farrukh.movix.utils.error_handle.NoLocalCacheFoundException
-import kh.farrukh.movix.utils.error_handle.toHandledError
+import kh.farrukh.progee.utils.error_handle.HandledError
+import kh.farrukh.progee.utils.error_handle.NoLocalCacheFoundException
+import kh.farrukh.progee.utils.error_handle.toHandledError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlin.coroutines.CoroutineContext

@@ -1,6 +1,6 @@
 package kh.farrukh.progee.ui.framework_details
 
-import kh.farrukh.movix.utils.error_handle.HandledError
+import kh.farrukh.progee.utils.error_handle.HandledError
 import kh.farrukh.progee.data.framework.models.Framework
 import kh.farrukh.progee.utils.Result
 

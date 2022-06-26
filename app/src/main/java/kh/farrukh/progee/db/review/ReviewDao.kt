@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kh.farrukh.progee.api.review.models.ReviewValue
 import kh.farrukh.progee.data.review.models.Review
 import kotlinx.coroutines.flow.Flow
 
@@ -14,6 +15,9 @@ import kotlinx.coroutines.flow.Flow
  **/
 @Dao
 interface ReviewDao {
+
+    @Query("SELECT * FROM reviews WHERE language_id = :languageId AND value = :value")
+    fun reviewPagingSourceByLanguageIdAndValue(languageId: Long, value: ReviewValue): PagingSource<Int, Review>
 
     @Query("SELECT * FROM reviews WHERE language_id = :languageId")
     fun reviewPagingSourceByLanguageId(languageId: Long): PagingSource<Int, Review>

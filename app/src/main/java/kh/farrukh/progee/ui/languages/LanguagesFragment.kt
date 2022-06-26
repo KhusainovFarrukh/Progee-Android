@@ -13,8 +13,8 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kh.farrukh.movix.utils.error_handle.HandledError
-import kh.farrukh.movix.utils.error_handle.onError
+import kh.farrukh.progee.utils.error_handle.HandledError
+import kh.farrukh.progee.utils.error_handle.onError
 import kh.farrukh.progee.R
 import kh.farrukh.progee.data.language.models.SortType
 import kh.farrukh.progee.data.language.models.languageSortTypes

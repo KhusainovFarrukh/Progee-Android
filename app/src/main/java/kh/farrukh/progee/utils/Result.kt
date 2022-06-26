@@ -1,6 +1,6 @@
 package kh.farrukh.progee.utils
 
-import kh.farrukh.movix.utils.error_handle.HandledError
+import kh.farrukh.progee.utils.error_handle.HandledError
 
 /**
  *Created by farrukh_kh on 3/24/22 10:27 PM

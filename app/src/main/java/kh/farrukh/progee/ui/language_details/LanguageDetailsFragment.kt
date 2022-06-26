@@ -2,6 +2,7 @@ package kh.farrukh.progee.ui.language_details
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -10,18 +11,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
-import kh.farrukh.movix.utils.error_handle.HandledError
-import kh.farrukh.movix.utils.error_handle.onError
 import kh.farrukh.progee.R
+import kh.farrukh.progee.api.review.models.ReviewValue
 import kh.farrukh.progee.data.language.models.Language
 import kh.farrukh.progee.databinding.FragmentLanguageDetailsBinding
 import kh.farrukh.progee.ui.global.ListLoadStateAdapter
+import kh.farrukh.progee.utils.error_handle.HandledError
+import kh.farrukh.progee.utils.error_handle.onError
 import kh.farrukh.progee.utils.loadImageById
 import kh.farrukh.progee.utils.snackLong
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 /**
  *Created by farrukh_kh on 6/24/22 12:29 AM
@@ -48,6 +52,7 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
     private fun setupUi() = with(binding) {
         mcvBack.setOnClickListener { findNavController().navigateUp() }
         layoutError.btnRetry.setOnClickListener { viewModel.getLanguageById() }
+
         rvFrameworks.adapter = frameworkAdapter.withCustomLoadStateHeaderAndFooter(
             ListLoadStateAdapter(isVertical = false) { frameworkAdapter.retry() },
             ListLoadStateAdapter(isVertical = false) { frameworkAdapter.retry() }
@@ -56,6 +61,32 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
             ListLoadStateAdapter { reviewAdapter.retry() },
             ListLoadStateAdapter { reviewAdapter.retry() }
         )
+
+        val reviewValueButtons = listOf(
+            btnAllReviews,
+            btnLikeReviews,
+            btnDislikeReviews,
+            btnWantToReviews,
+            btnDonTHaveReviews
+        )
+
+        reviewValueButtons.forEach { btn ->
+            btn.setOnClickListener {
+                Timber.e("$btn clicked")
+                reviewValueButtons.forEach(::unselectBtn)
+                selectBtn(btn)
+                viewModel.setReviewValue(
+                    when (btn.id) {
+                        R.id.btn_all_reviews -> null
+                        R.id.btn_like_reviews -> ReviewValue.LIKE
+                        R.id.btn_dislike_reviews -> ReviewValue.DISLIKE
+                        R.id.btn_want_to_reviews -> ReviewValue.WANT_TO_LEARN
+                        R.id.btn_don_t_have_reviews -> ReviewValue.DONT_HAVE_PRACTICE
+                        else -> null
+                    }
+                )
+            }
+        }
     }
 
     private fun setObservers() = with(viewModel) {
@@ -175,5 +206,15 @@ class LanguageDetailsFragment : Fragment(R.layout.fragment_language_details) {
 
     private fun onDislikeClick(reviewId: Long) {
         // TODO: implement
+    }
+
+    private fun selectBtn(btn: MaterialButton) {
+        btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black))
+        btn.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+    }
+
+    private fun unselectBtn(btn: MaterialButton) {
+        btn.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+        btn.setTextColor(ContextCompat.getColor(requireContext(), R.color.black))
     }
 }
